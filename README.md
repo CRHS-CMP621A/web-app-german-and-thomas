@@ -1,8 +1,8 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/_AfzJBUU)
 # JS-Web-App
 ## Project Name:
-#### Developers: 
-#### Date and Course:
+#### Developers: Geman Ivkovich and Thomas Qi
+#### Date and Course: 5/29/2023
 <hr>
 
 ### Problem Or Situation to Improve
