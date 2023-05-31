@@ -1,0 +1,32 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.gallary-container {
+  margin: auto;
+  position: relative;
+  max-width: max-content;
+  grid-area: gallary;
+}
+
+.gallary-image {
+  max-width: 100%;
+}
+
+.btn {
+  position: absolute;
+  top: 0;
+  color: white;
+  background-color: black;
+  transform: translateY(50%);
+  height: 50%;
+}
+
+.prev {
+  left: 0;
+}
+
+.next {
+  right: 0;
+}
