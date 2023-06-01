@@ -1,7 +1,14 @@
-const leftBtn = document.querySelector(".leftBtn");
-const rightBtn = document.querySelector(".rightBtn");
+const gallaryContent = document.querySelector(".gallary-content");
 
-const KEY = "DEMO_API"; // todo: hide the api key
+const contentTitle = document.querySelector(".content-title");
+const contentDescription = document.querySelector(".content-description");
+const contentCopyright = document.querySelector(".content-copyright");
+const contentOwner = document.querySelector(".content-owner");
+
+const prevBtn = document.querySelector(".prev");
+const nextBtn = document.querySelector(".next");
+
+const KEY = "DEMO_KEY"; // todo: hide the api key
 const baseURL = "https://api.nasa.gov/planetary/apod";
 
 const maxDate = new Date(); // Current date
@@ -15,30 +22,7 @@ let year = date.getFullYear();
 let month = date.getMonth();
 let day = date.getDate();
 
-leftBtn.addEventListener("click", async () => {
-  day -= 1;
-  date = new Date(year, month, day);
-
-  if (date < minDate) {
-    date = minDate;
-    day = minDay;
-  }
-});
-
-rightBtn.addEventListener("click", async () => {
-  day += 1;
-  date = new Date(year, month, day);
-
-  if (date > maxDate) {
-    date = maxDate;
-    day = maxDay;
-  }
-
-  await getJSON(
-    formatDateObject(date),
-    formatDateObject(new Date(year, month, day + 4))
-  );
-});
+let jsonData;
 
 function formatDateObject(date) {
   dateString = date.toLocaleDateString();
@@ -46,13 +30,61 @@ function formatDateObject(date) {
   return `${reversedDateStringArray[0]}-${reversedDateStringArray[2]}-${reversedDateStringArray[1]}`;
 }
 
-async function getJSON(startDate, endDate) {
+async function getJSON(dateString) {
   const params = new URLSearchParams({
-    start_date: startDate,
-    end_date: endDate,
+    date: dateString,
     api_key: KEY,
   });
   const response = await fetch(`${baseURL}?${params}`);
   const jsonData = response.json();
+  return jsonData;
+}
+
+function checkDate(date) {
+  if (date > maxDate) {
+    date = maxDate;
+    day = maxDay;
+  }
+
+  if (date < minDate) {
+    date = minDate;
+    day = minDay;
+  }
+  return date;
+}
+
+function setHTMLContent(jsonData) {
+  contentTitle.textContent = jsonData.title;
+  contentDescription.textContent = jsonData.explanation;
+
+  if (jsonData.copyright) {
+    contentOwner.textContent = jsonData.copyright;
+    contentCopyright.style.visibility = "visible";
+  } else {
+    contentCopyright.style.visibility = "hidden";
+  }
+}
+
+async function setInitialHTMLContent() {
+  jsonData = await getJSON(formatDateObject(date));
+  setHTMLContent(jsonData);
   console.log(jsonData);
 }
+
+prevBtn.addEventListener("click", async () => {
+  day += 1;
+  date = checkDate(new Date(year, month, day));
+  jsonData = await getJSON(formatDateObject(date));
+  setHTMLContent(jsonData);
+  console.log(jsonData);
+});
+
+nextBtn.addEventListener("click", async () => {
+  day -= 1;
+  date = checkDate(new Date(year, month, day));
+  jsonData = await getJSON(formatDateObject(date));
+  setHTMLContent(jsonData);
+  console.log(jsonData);
+});
+
+// window.onload = setInitialHTMLContent();
