@@ -37,7 +37,7 @@ body {
   width: 500px;
 }
 
-.gallary-image {
+.gallary-content {
   object-fit: cover;
   object-position: bottom;
   max-width: 100%;
