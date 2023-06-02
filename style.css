@@ -15,7 +15,9 @@ body {
   z-index: 1;
   padding: 1rem;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  gap: 1rem;
 }
 
 .navlink {
@@ -27,12 +29,12 @@ body {
 
 .main {
   margin: auto;
-  padding: 1rem;
-  padding-top: 4rem;
-  display: flex;
-  flex-wrap: wrap;
+  padding: 7rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   justify-content: center;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1rem;
 }
 
 .gallary-container {
@@ -81,4 +83,9 @@ body {
 .content-description {
   max-width: 66ch;
   word-wrap: break-word;
+}
+
+
+@media screen {
+  
 }
