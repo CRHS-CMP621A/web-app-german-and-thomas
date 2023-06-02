@@ -23,13 +23,16 @@ body {
   text-decoration: none;
 }
 
+/* TODO: Change the flexbox to grid */
+
 .main {
   margin: auto;
   padding: 1rem;
   padding-top: 4rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 .gallary-container {
@@ -41,6 +44,7 @@ body {
   object-fit: cover;
   object-position: bottom;
   max-width: 100%;
+  border-radius: 1rem;
 }
 
 .btn {
@@ -64,6 +68,9 @@ body {
 
 .gallary-sidebar {
   align-self: stretch;
+  padding: 1rem;
+  border:#15418c solid;
+  border-radius: 1rem;
 }
 
 .content-title,

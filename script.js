@@ -1,19 +1,17 @@
 const gallaryContent = document.querySelector(".gallary-content");
-
 const contentTitle = document.querySelector(".content-title");
 const contentDescription = document.querySelector(".content-description");
 const contentCopyright = document.querySelector(".content-copyright");
 const contentOwner = document.querySelector(".content-owner");
-
 const prevBtn = document.querySelector(".prev");
 const nextBtn = document.querySelector(".next");
 
-const KEY = "DEMO_KEY"; // todo: hide the api key
+const API_KEY = "17eFLQMQpMTycKUNGHZjoyNum4HarzvikaUAPQX9"; // todo: hide the api key
 const baseURL = "https://api.nasa.gov/planetary/apod";
+const OFFSET = 20; // Determines how many pictures are loaded
 
 const maxDate = new Date(); // Current date
 const minDate = new Date(1995, 6, 16); // June 16, 1995
-
 const maxDay = maxDate.getDate();
 const minDay = minDate.getDate();
 
@@ -22,25 +20,69 @@ let year = date.getFullYear();
 let month = date.getMonth();
 let day = date.getDate();
 
-let jsonData;
-
 function formatDateObject(date) {
   dateString = date.toLocaleDateString();
   reversedDateStringArray = dateString.split("/").reverse();
   return `${reversedDateStringArray[0]}-${reversedDateStringArray[2]}-${reversedDateStringArray[1]}`;
 }
 
-async function getJSON(dateString) {
+async function getMultiplePicturesOfTheDay(startDate, endDate) {
   const params = new URLSearchParams({
-    date: dateString,
-    api_key: KEY,
+    start_date: formatDateObject(endDate), // start date can't be before today's date
+    end_date: formatDateObject(startDate),
+    api_key: API_KEY,
   });
   const response = await fetch(`${baseURL}?${params}`);
-  const jsonData = response.json();
-  return jsonData;
+  const data = response.json();
+  return data;
 }
 
-function checkDate(date) {
+function addDataToLocalStorage(data) {
+  for (let article of data) {
+    const date = new Date(article.date);
+    const dateString = date.toLocaleDateString();
+
+    localStorage.setItem(dateString, JSON.stringify(article));
+  }
+}
+
+function setHTMLContentFromLocalStorage(date) {
+  const article = JSON.parse(localStorage.getItem(date.toLocaleDateString()));
+
+  // console.log(date.toLocaleDateString());
+  // console.log(article);
+
+  if (!article) return; // Check if article exists
+
+  gallaryContent.src = article.url; // todo: add the way to check if it's a video or image
+  contentTitle.textContent = article.title;
+  contentDescription.textContent = article.explanation;
+
+  if (article.copyright) {
+    contentOwner.textContent = article.copyright;
+    contentCopyright.style.visibility = "visible";
+  } else {
+    contentCopyright.style.visibility = "hidden";
+  }
+}
+
+async function loadInitialPicturesOfTheDay() {
+  const startDate = maxDate;
+  const endDate = new Date(year, month, day - OFFSET);
+  const data = await getMultiplePicturesOfTheDay(startDate, endDate);
+
+  // console.log(data);
+
+  if (data.error) {
+    console.warn(data.error.message);
+    return;
+  }
+
+  addDataToLocalStorage(data);
+  setHTMLContentFromLocalStorage(startDate);
+}
+
+function errorCheckedDate(date) {
   if (date > maxDate) {
     date = maxDate;
     day = maxDay;
@@ -53,38 +95,16 @@ function checkDate(date) {
   return date;
 }
 
-function setHTMLContent(jsonData) {
-  contentTitle.textContent = jsonData.title;
-  contentDescription.textContent = jsonData.explanation;
-
-  if (jsonData.copyright) {
-    contentOwner.textContent = jsonData.copyright;
-    contentCopyright.style.visibility = "visible";
-  } else {
-    contentCopyright.style.visibility = "hidden";
-  }
-}
-
-async function setInitialHTMLContent() {
-  jsonData = await getJSON(formatDateObject(date));
-  setHTMLContent(jsonData);
-  console.log(jsonData);
-}
-
 prevBtn.addEventListener("click", async () => {
   day += 1;
-  date = checkDate(new Date(year, month, day));
-  jsonData = await getJSON(formatDateObject(date));
-  setHTMLContent(jsonData);
-  console.log(jsonData);
+  date = errorCheckedDate(new Date(year, month, day));
+  setHTMLContentFromLocalStorage(date);
 });
 
 nextBtn.addEventListener("click", async () => {
   day -= 1;
-  date = checkDate(new Date(year, month, day));
-  jsonData = await getJSON(formatDateObject(date));
-  setHTMLContent(jsonData);
-  console.log(jsonData);
+  date = errorCheckedDate(new Date(year, month, day));
+  setHTMLContentFromLocalStorage(date);
 });
 
-// window.onload = setInitialHTMLContent();
+// window.onload = loadInitialPicturesOfTheDay();
