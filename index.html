@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='utf-8'>
+    <title>My Application</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
+</head>
+<body>
+    <div class="logobar">
+        <!-- ADD APP LOGO HERE -->
+        <div class="appname">Astronomy Picture Of the Day</div>
+    </div>
+    <nav class="navbar">
+        <a class="navlink" href="https://apod.nasa.gov/apod/archivepix.html">Archive</a>
+        <a class="navlink" href="https://apod.nasa.gov/apod/lib/apsubmit2015.html">Submissions</a>
+        <a class="navlink" href="https://apod.nasa.gov/apod/lib/aptree.html">Index</a>
+        <a class="navlink" href="https://apod.nasa.gov/cgi-bin/apod/apod_search">Search</a>
+        <a class="navlink" href="https://apod.nasa.gov/apod/calendar/allyears.html">Calendar</a>
+        <a class="navlink" href="https://apod.nasa.gov/apod.rss">RSS</a>
+        <a class="navlink" href="https://apod.nasa.gov/apod/lib/edlinks.html">Education</a>
+        <a class="navlink" href="https://apod.nasa.gov/apod/lib/about_apod.html">About APOD</a>
+        <a class="navlink" href="https://asterisk.apod.com/viewtopic.php?t=43157">Discuss</a>
+    </nav>
+    <div class="main">
+        <div class="gallary-container">
+            <iframe class="gallary-video"></iframe> 
+            <img class="gallary-content" src="images/earth.jpg" alt="Photo of Earth">
+            <button class="prev btn">➔</button>
+            <button class="next btn">➔</button>
+        </div>
+        <div class="gallary-sidebar">
+            <h2 class="content-title">Earth</h2>
+            <p class="content-description">
+                This is a sample text that you should not see. Contact support if this text persists.
+            </p>
+            <p class="content-copyright">
+                Image Credit & Copyright: <span class="content-owner">NASA</span>
+            </p>
+        </div>
+    </div>
+    <script src='script.js' async></script>
+</body>
+</html>

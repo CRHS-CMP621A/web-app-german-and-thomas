@@ -1,0 +1,139 @@
+body {
+  margin: 0;
+  font-family: "Titillium Web", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  background-color: black;
+  color: white;
+}
+
+.logobar {
+  color: white;
+  background-color: #15418c;
+  font-size: large;
+  font-weight: bold;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar {
+  padding: 0.6rem;
+  color: white;
+  background-color: gray;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.navlink {
+  color: white;
+  text-decoration: none;
+}
+
+.main {
+  margin: auto;
+  padding: 4rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+}
+
+.gallary-container {
+  user-select: none;
+  position: relative;
+  text-align: center;
+  width: 500px;
+  min-height: 6rem;
+}
+
+.gallary-video {
+  display: none;
+  width: 100%;
+  height: 50vh;
+}
+
+.gallary-content {
+  object-fit: cover;
+  object-position: bottom;
+  max-width: 100%;
+}
+
+.gallary-content,
+.gallary-video {
+  border: white solid;
+  border-radius: 1rem;
+}
+
+button {
+  background-color: transparent;
+}
+
+.btn {
+  margin: 0 0.5rem 0 0.5rem;
+  user-select: none;
+  cursor: pointer;
+  color: white;
+  background-color: rgb(0, 0, 0, 0.5);
+  font-size: large;
+  border: #15418c solid 2px;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.prev {
+  left: 0;
+  rotate: 180deg;
+}
+
+.next {
+  right: 0;
+}
+
+.btn:hover {
+  background-color: rgb(0, 0, 0);
+  transform: scale(1.2, 1.2);
+  transition: transform 1s;
+  
+  /* SAFARI */
+  -webkit-transform: scale(1.2, 1.2);
+  -webkit-transition: transform 1s;
+}
+
+.gallary-sidebar {
+  padding: 1rem;
+  border:#15418c solid;
+  border-radius: 1rem;
+}
+
+.content-title {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.content-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 2rem;
+  right: 2rem;
+  border: white solid 2px;
+  border-radius: 1rem;
+}
+
+.content-title,
+.content-copyright {
+  text-align: center;
+}
+
+.content-description {
+  max-width: 66ch;
+  word-wrap: break-word;
+  line-height: 1.5;
+}
