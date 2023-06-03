@@ -1,3 +1,5 @@
+const gallaryContainter = document.querySelector(".gallary-container");
+const gallaryVideo = document.querySelector(".gallary-video");
 const gallaryContent = document.querySelector(".gallary-content");
 const contentTitle = document.querySelector(".content-title");
 const contentDescription = document.querySelector(".content-description");
@@ -39,9 +41,10 @@ async function getMultiplePicturesOfTheDay(startDate, endDate) {
 
 function addDataToLocalStorage(data) {
   for (let article of data) {
-    const date = new Date(article.date);
+    const date = new Date(article.date + "T00:00:00");
     const dateString = date.toLocaleDateString();
 
+    // console.log(dateString);
     localStorage.setItem(dateString, JSON.stringify(article));
   }
 }
@@ -54,7 +57,19 @@ function setHTMLContentFromLocalStorage(date) {
 
   if (!article) return; // Check if article exists
 
-  gallaryContent.src = article.url; // todo: add the way to check if it's a video or image
+  if (article.media_type === "image") {
+    gallaryContent.alt = article.title;
+    gallaryContent.src = article.url;
+    gallaryVideo.style.display = "none";
+    gallaryContent.style.display = "block";
+  }
+
+  if (article.media_type === "video") {
+    gallaryVideo.src = article.url;
+    gallaryContent.style.display = "none";
+    gallaryVideo.style.display = "block";
+  }
+
   contentTitle.textContent = article.title;
   contentDescription.textContent = article.explanation;
 
@@ -95,16 +110,16 @@ function errorCheckedDate(date) {
   return date;
 }
 
-prevBtn.addEventListener("click", async () => {
+prevBtn.addEventListener("click", () => {
   day += 1;
   date = errorCheckedDate(new Date(year, month, day));
   setHTMLContentFromLocalStorage(date);
 });
 
-nextBtn.addEventListener("click", async () => {
+nextBtn.addEventListener("click", () => {
   day -= 1;
   date = errorCheckedDate(new Date(year, month, day));
   setHTMLContentFromLocalStorage(date);
 });
 
-// window.onload = loadInitialPicturesOfTheDay();
+window.onload = loadInitialPicturesOfTheDay();
