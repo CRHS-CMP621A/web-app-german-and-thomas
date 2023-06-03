@@ -5,15 +5,21 @@ body {
   color: white;
 }
 
-.navbar {
-  background-color: #15418c;
+.logobar {
   color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
+  background-color: #15418c;
+  font-size: large;
+  font-weight: bold;
   padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar {
+  padding: 0.6rem;
+  color: white;
+  background-color: gray;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -25,21 +31,24 @@ body {
   text-decoration: none;
 }
 
-/* TODO: Change the flexbox to grid */
-
 .main {
   margin: auto;
-  padding: 7rem;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  padding: 4rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 .gallary-container {
+  user-select: none;
   position: relative;
+  text-align: center;
   width: 500px;
+  min-height: 6rem;
+  border: white solid;
+  border-radius: 1rem;
 }
 
 .gallary-content {
@@ -49,27 +58,40 @@ body {
   border-radius: 1rem;
 }
 
+button {
+  background-color: transparent;
+}
+
 .btn {
+  margin: 0 0.5rem 0 0.5rem;
+  user-select: none;
   cursor: pointer;
-  position: absolute;
-  top: 0;
   color: white;
-  background-color: #15418c;
-  transform: translateY(50%);
-  height: 50%;
-  opacity: 0.5;
+  background-color: rgb(0, 0, 0, 0.5);
+  font-size: large;
+  border: #15418c solid 2px;
+  border-radius: 50%;
+  height: 3rem;
+  width: 3rem;
+  position: absolute;
+  top: 50%;
+}
+
+.btn:hover {
+  background-color: rgb(0, 0, 0);
 }
 
 .prev {
   left: 0;
+  transform: rotate(180deg) translateY(50%);
 }
 
 .next {
   right: 0;
+  transform: translateY(-50%);
 }
 
 .gallary-sidebar {
-  align-self: stretch;
   padding: 1rem;
   border:#15418c solid;
   border-radius: 1rem;
@@ -83,9 +105,4 @@ body {
 .content-description {
   max-width: 66ch;
   word-wrap: break-word;
-}
-
-
-@media screen {
-  
 }
