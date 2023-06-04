@@ -17,6 +17,7 @@ const minDate = new Date(1995, 6, 16); // June 16, 1995
 const maxDay = maxDate.getDate();
 const minDay = minDate.getDate();
 
+
 let year = maxDate.getFullYear(); // Today's year
 let month = maxDate.getMonth(); // Today's month
 let day = maxDate.getDate(); // Today's day
