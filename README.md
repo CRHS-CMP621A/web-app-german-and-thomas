@@ -27,7 +27,7 @@
 
 #### Sources
 
-> List of the APIs used in the project resources for learning about them.
+> List of the APIs used in the project and resources for learning about them.
 
 - [NASA APOD API](https://github.com/nasa/apod-api) (GitHub)
 - [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL_API) (MDN Web Docs)
