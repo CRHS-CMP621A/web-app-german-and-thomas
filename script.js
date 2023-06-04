@@ -17,22 +17,18 @@ const minDate = new Date(1995, 6, 16); // June 16, 1995
 const maxDay = maxDate.getDate();
 const minDay = minDate.getDate();
 
-let date = maxDate;
-let year = date.getFullYear();
-let month = date.getMonth();
-let day = date.getDate();
-
-let startDate = new Date();
-let endDate = new Date(year, month, day - OFFSET);
+let year = maxDate.getFullYear(); // Today's year
+let month = maxDate.getMonth(); // Today's month
+let day = maxDate.getDate(); // Today's day
 
 function formatDateObject(date) {
   dateString = date.toLocaleDateString();
-  reversedDateStringArray = dateString.split("/").reverse();
-  return `${reversedDateStringArray[0]}-${reversedDateStringArray[2]}-${reversedDateStringArray[1]}`;
+  reversedDateStrArray = dateString.split("/").reverse();
+  return `${reversedDateStrArray[0]}-${reversedDateStrArray[2]}-${reversedDateStrArray[1]}`;
 }
 
 function addDataToLocalStorage(data) {
-  console.log(data);
+  // console.log(data);
   for (let article of data) {
     const date = new Date(article.date + "T00:00:00"); // T00:00:00 avoid issue of no timezone
     const dateString = date.toLocaleDateString();
@@ -104,13 +100,16 @@ function errorCheckedDate(date) {
 }
 
 async function loadNextOrPrevPicture() {
-  date = errorCheckedDate(new Date(year, month, day));
+  const date = errorCheckedDate(new Date(year, month, day));
+  const nextDate = errorCheckedDate(new Date(year, month, day - 1));
 
-  // Modify to fully utilize localStorage (no need to load the images already loaded)
-  // There should be a better way to handle this
-  if (date.toString() === endDate.toString()) {
-    startDate = endDate;
-    endDate = new Date(year, month, day - OFFSET);
+  // console.log(localStorage.getItem(date.toLocaleDateString()));
+
+  // Request next data if the next date is not in the local storage
+  // TODO: Make the loading and prevent user from switching image
+  if (!localStorage.getItem(nextDate.toLocaleDateString())) {
+    const startDate = nextDate;
+    const endDate = new Date(year, month, day - OFFSET);
     await getMultiplePicturesOfTheDay(startDate, endDate);
   }
 
@@ -120,12 +119,12 @@ async function loadNextOrPrevPicture() {
 async function setInitialPictureOfTheDay() {
   // Check if today's date article is stored in local storage
   if (!localStorage.getItem(maxDate.toLocaleDateString())) {
-    localStorage.clear(); // Clear the storage for new data
-    console.warn("Local storage was reset!");
+    const startDate = new Date();
+    const endDate = new Date(year, month, day - OFFSET);
     await getMultiplePicturesOfTheDay(startDate, endDate);
   }
 
-  setHTMLContentFromLocalStorage(date);
+  setHTMLContentFromLocalStorage(maxDate);
 }
 
 prevBtn.addEventListener("click", async () => {

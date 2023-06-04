@@ -107,6 +107,7 @@ button {
 }
 
 .gallary-sidebar {
+  max-width: 66ch;
   padding: 1rem;
   border:#15418c solid;
   border-radius: 1rem;
@@ -129,11 +130,11 @@ button {
 
 .content-title,
 .content-copyright {
+  word-wrap: break-word;
   text-align: center;
 }
 
 .content-description {
-  max-width: 66ch;
   word-wrap: break-word;
   line-height: 1.5;
 }
