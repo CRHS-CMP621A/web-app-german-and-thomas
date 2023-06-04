@@ -135,6 +135,21 @@ button {
   border-radius: 1rem;
 }
 
+.content-title {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.content-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 2rem;
+  right: 2rem;
+  border: white solid 2px;
+  border-radius: 1rem;
+}
+
 .content-title,
 .content-copyright {
   word-wrap: break-word;

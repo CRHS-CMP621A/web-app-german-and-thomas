@@ -11,28 +11,34 @@ const nextBtn = document.querySelector(".next");
 const API_KEY = "17eFLQMQpMTycKUNGHZjoyNum4HarzvikaUAPQX9"; // todo: hide the api key
 const baseURL = "https://api.nasa.gov/planetary/apod";
 const OFFSET = 20; // Determines how many pictures are loaded
-const PRELOAD = 5; // Determines when pictures loaded in a advanced
-
-const LESS_THAN_KEY = 44; // <
-const GREATER_THAN_KEY = 46; // >
 
 const maxDate = new Date(); // Current date
 const minDate = new Date(1995, 6, 16); // June 16, 1995
 const maxDay = maxDate.getDate();
 const minDay = minDate.getDate();
 
-let date = maxDate;
-let year = date.getFullYear();
-let month = date.getMonth();
-let day = date.getDate();
 
-let startDate = new Date();
-let endDate = new Date(year, month, day - OFFSET);
+let year = maxDate.getFullYear(); // Today's year
+let month = maxDate.getMonth(); // Today's month
+let day = maxDate.getDate(); // Today's day
 
 function formatDateObject(date) {
   dateString = date.toLocaleDateString();
-  reversedDateStringArray = dateString.split("/").reverse();
-  return `${reversedDateStringArray[0]}-${reversedDateStringArray[2]}-${reversedDateStringArray[1]}`;
+  reversedDateStrArray = dateString.split("/").reverse();
+  return `${reversedDateStrArray[0]}-${reversedDateStrArray[2]}-${reversedDateStrArray[1]}`;
+}
+
+function addDataToLocalStorage(data) {
+  // console.log(data);
+  for (let article of data) {
+    const date = new Date(article.date + "T00:00:00"); // T00:00:00 avoid issue of no timezone
+    const dateString = date.toLocaleDateString();
+
+    // console.log(dateString);
+    // Check if the item doesn't exists
+    if (!localStorage.getItem(dateString))
+      localStorage.setItem(dateString, JSON.stringify(article)); // Convert data to string and store it in local storage
+  }
 }
 
 async function getMultiplePicturesOfTheDay(startDate, endDate) {
@@ -42,20 +48,15 @@ async function getMultiplePicturesOfTheDay(startDate, endDate) {
     api_key: API_KEY,
   });
   const response = await fetch(`${baseURL}?${params}`);
-  const data = response.json();
-  return data;
-}
 
-function addDataToLocalStorage(data) {
-  for (let article of data) {
-    const date = new Date(article.date + "T00:00:00"); // T00:00:00 avoid issue of no timezone
-    const dateString = date.toLocaleDateString();
+  response.json().then((data) => {
+    if (data.error) {
+      console.warn(data.error.message);
+      return;
+    }
 
-    // console.log(dateString);
-    // Check if the item already exists
-    if (!localStorage.getItem(dateString))
-      localStorage.setItem(dateString, JSON.stringify(article)); // Convert data to string and store it in local storage
-  }
+    addDataToLocalStorage(data);
+  });
 }
 
 function setHTMLContentFromLocalStorage(date) {
@@ -84,20 +85,6 @@ function setHTMLContentFromLocalStorage(date) {
   }
 }
 
-async function loadInitialPicturesOfTheDay(startDate, endDate) {
-  const data = await getMultiplePicturesOfTheDay(startDate, endDate);
-
-  // console.log(data);
-  // Check if the there's an error in API request
-  if (data.error) {
-    console.warn(data.error.message);
-    return;
-  }
-
-  addDataToLocalStorage(data);
-  setHTMLContentFromLocalStorage(startDate);
-}
-
 function errorCheckedDate(date) {
   // Check if the date is the future date
   if (date > maxDate) {
@@ -113,57 +100,49 @@ function errorCheckedDate(date) {
   return date;
 }
 
-async function loadNextPicturesOfTheDay(startDate, endDate) {
-  const data = await getMultiplePicturesOfTheDay(startDate, endDate);
+async function loadNextOrPrevPicture() {
+  const date = errorCheckedDate(new Date(year, month, day));
+  const nextDate = errorCheckedDate(new Date(year, month, day - 1));
 
-  // console.log(data);
-  if (data.error) {
-    console.warn(data.error.message);
-    return;
-  }
+  // console.log(localStorage.getItem(date.toLocaleDateString()));
 
-  // console.log(startDate.toLocaleDateString());
-  addDataToLocalStorage(data);
-}
-
-function loadNextOrPrevPicture(event) {
-  // console.log(event.keyCode);
-  if (
-    event.target.className === "next btn" ||
-    event.keyCode === GREATER_THAN_KEY
-  )
-    day -= 1;
-
-  if (event.target.className === "prev btn" || event.keyCode === LESS_THAN_KEY)
-    day += 1;
-
-  date = errorCheckedDate(new Date(year, month, day));
-
-  // console.log(date.toLocaleDateString());
-  // console.log(endDate.toLocaleDateString());
-
-  // Modify to fully utilize localStorage (no need to load the images already loaded)
-  // There should be a better way to handle this
-  if (date.toString() === endDate.toString()) {
-    startDate = endDate;
-    endDate = new Date(year, month, day - PRELOAD - OFFSET);
-    loadNextPicturesOfTheDay(startDate, endDate);
+  // Request next data if the next date is not in the local storage
+  // TODO: Make the loading and prevent user from switching image
+  if (!localStorage.getItem(nextDate.toLocaleDateString())) {
+    const startDate = nextDate;
+    const endDate = new Date(year, month, day - OFFSET);
+    await getMultiplePicturesOfTheDay(startDate, endDate);
   }
 
   setHTMLContentFromLocalStorage(date);
 }
 
-prevBtn.addEventListener("click", (event) => loadNextOrPrevPicture(event));
-nextBtn.addEventListener("click", (event) => loadNextOrPrevPicture(event));
-document.addEventListener("keypress", (event) => loadNextOrPrevPicture(event));
-
-window.onload = () => {
+async function setInitialPictureOfTheDay() {
   // Check if today's date article is stored in local storage
   if (!localStorage.getItem(maxDate.toLocaleDateString())) {
-    localStorage.clear(); // Clear the storage for new data
-    console.warn("Local storage was reset!");
-    loadInitialPicturesOfTheDay(startDate, endDate);
+    const startDate = new Date();
+    const endDate = new Date(year, month, day - OFFSET);
+    await getMultiplePicturesOfTheDay(startDate, endDate);
   }
 
-  setHTMLContentFromLocalStorage(date);
-};
+  setHTMLContentFromLocalStorage(maxDate);
+}
+
+prevBtn.addEventListener("click", async () => {
+  day += 1;
+  await loadNextOrPrevPicture();
+});
+
+nextBtn.addEventListener("click", async () => {
+  day -= 1;
+  await loadNextOrPrevPicture();
+});
+
+document.addEventListener("keydown", async (event) => {
+  // console.log(event.key);
+  if (event.key === "ArrowRight") day -= 1;
+  if (event.key === "ArrowLeft") day += 1;
+  await loadNextOrPrevPicture();
+});
+
+window.onload = setInitialPictureOfTheDay();
