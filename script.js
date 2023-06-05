@@ -17,7 +17,6 @@ const minDate = new Date(1995, 6, 16); // June 16, 1995
 const maxDay = maxDate.getDate();
 const minDay = minDate.getDate();
 
-
 let year = maxDate.getFullYear(); // Today's year
 let month = maxDate.getMonth(); // Today's month
 let day = maxDate.getDate(); // Today's day
@@ -48,6 +47,11 @@ async function getMultiplePicturesOfTheDay(startDate, endDate) {
     api_key: API_KEY,
   });
   const response = await fetch(`${baseURL}?${params}`);
+
+  if (response.status !== 200) {
+    console.warn(`API Error: ${response.statusText}`);
+    return;
+  }
 
   response.json().then((data) => {
     if (data.error) {
@@ -140,9 +144,11 @@ nextBtn.addEventListener("click", async () => {
 
 document.addEventListener("keydown", async (event) => {
   // console.log(event.key);
-  if (event.key === "ArrowRight") day -= 1;
-  if (event.key === "ArrowLeft") day += 1;
-  await loadNextOrPrevPicture();
+  if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+    if (event.key === "ArrowRight") day -= 1;
+    if (event.key === "ArrowLeft") day += 1;
+    await loadNextOrPrevPicture();
+  }
 });
 
 window.onload = setInitialPictureOfTheDay();

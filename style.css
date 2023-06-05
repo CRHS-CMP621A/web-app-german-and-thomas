@@ -1,16 +1,27 @@
+html {
+  scroll-behavior: smooth;
+  scroll-margin: 1rem;
+}
+
 body {
   margin: 0;
-  font-family: "Titillium Web", "Helvetica Neue", "Helvetica", Arial, sans-serif;
-  background-color: black;
   color: white;
+  background-color: black;
+  background-image: url(images/starfield-banner.jpg);
+  background-position: center;
+  height: 100vh;
+  font-family: "Titillium Web", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .logobar {
   color: white;
   background-color: #15418c;
-  font-size: large;
+  font-size:large;
   font-weight: bold;
-  padding: 1rem;
+  word-wrap: break-word;
+  padding: 1.5rem 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -19,10 +30,10 @@ body {
 .navbar {
   padding: 0.6rem;
   color: white;
-  background-color: gray;
+  background-color: #555555;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 1rem;
 }
 
@@ -33,20 +44,24 @@ body {
 
 .main {
   margin: auto;
-  padding: 4rem 1rem;
+  padding: 1rem;
+  border: rgb(21, 65, 140) solid;
+  background-color: #15418c;
+  border-radius: 1rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 1rem;
+  box-shadow: 0 20px 20px 0 rgba(21, 65, 140, 0.2), 0 10px 20px 0 rgba(21, 65, 140, 0.19);
 }
 
 .gallary-container {
   user-select: none;
   position: relative;
   text-align: center;
-  width: 500px;
-  min-height: 6rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0 ,0, 0.19);
 }
 
 .gallary-video {
@@ -65,6 +80,7 @@ body {
 .gallary-video {
   border: white solid;
   border-radius: 1rem;
+  background-color: white;
 }
 
 button {
@@ -76,7 +92,7 @@ button {
   user-select: none;
   cursor: pointer;
   color: white;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   font-size: large;
   border: #15418c solid 2px;
   border-radius: 50%;
@@ -137,4 +153,16 @@ button {
 .content-description {
   word-wrap: break-word;
   line-height: 1.5;
+}
+
+@media (max-width: 1300px) {
+  .main {
+    margin: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .appname {
+    margin: auto;
+  }
 }
