@@ -1,8 +1,10 @@
 body {
   margin: 0;
-  font-family: "Titillium Web", "Helvetica Neue", "Helvetica", Arial, sans-serif;
-  background-color: black;
   color: white;
+  background-color: black;
+  font-family: "Titillium Web", "Helvetica Neue", "Helvetica", Arial, sans-serif;
+  background-image: url(images/starfield-banner.jpg);
+  background-position: center;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -14,7 +16,7 @@ body {
   font-size: large;
   font-weight: bold;
   word-wrap: break-word;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -24,10 +26,10 @@ body {
   margin-bottom: 1rem;
   padding: 0.6rem;
   color: white;
-  background-color: gray;
+  background-color: #555555;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-evenly;
   gap: 1rem;
 }
 
@@ -47,14 +49,17 @@ body {
   justify-content: center;
   align-items: center;
   gap: 1rem;
+  box-shadow: 0 20px 20px 0 rgba(21, 65, 140, 0.2), 0 10px 20px 0 rgba(21, 65, 140, 0.19);
 }
 
 .gallary-container {
+  user-select: none;
+  position: relative;
   max-width: 66ch;
   width: 100%;
-  position: relative;
-  user-select: none;
   text-align: center;
+  border-radius: 1rem;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0 ,0, 0.19);
 }
 
 .gallary-video {
@@ -85,7 +90,7 @@ button {
   user-select: none;
   cursor: pointer;
   color: white;
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgb(0, 0, 0, 0.7);
   font-size: large;
   border: #15418c solid 2px;
   border-radius: 50%;
@@ -109,10 +114,6 @@ button {
   background-color: rgb(0, 0, 0);
   transform: scale(1.2, 1.2);
   transition: transform 1s;
-
-  /* SAFARI */
-  -webkit-transform: scale(1.2, 1.2);
-  -webkit-transition: transform 1s;
 }
 
 .gallary-sidebar {
@@ -164,5 +165,11 @@ button {
 @media (max-width: 1300px) {
   .main {
     margin: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .appname {
+    margin: auto;
   }
 }
