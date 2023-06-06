@@ -64,34 +64,35 @@ async function getMultiplePicturesOfTheDay(startDate, endDate) {
   });
 }
 
-function setHTMLContentFromLocalStorage(date) {
-  gallaryLoading.style.visibility = "visible";
+function setGallaryContent(article) {
+  gallaryContent.src = article.url ?? "";
+  gallaryContent.alt = article.title ?? "";
+  gallaryContent.style.display = "block"; // show image
+  gallaryVideo.style.display = "none"; // hide video
+}
 
+function setGallaryVideo(article) {
+  gallaryVideo.src = article.url ?? ""; // Stops the video from playing when style="display: none"
+  gallaryContent.style.display = "none"; // hide image
+  gallaryVideo.style.display = "block"; // show video
+}
+
+function setHTMLContentFromLocalStorage(date) {
   const dateString = date.toLocaleDateString();
   let article = articles[dateString];
 
+  gallaryLoading.style.visibility = "visible"; // Show the loading screen
   if (!article && !localStorage.getItem(dateString)) return;
+
   article = JSON.parse(localStorage.getItem(dateString));
 
-  // console.log(date.toLocaleDateString());
-  // console.log(article);
-
-  gallaryContent.src = article.media_type === "image" ? article.url : "";
-  gallaryContent.alt = article.media_type === "image" ? article.title : "";
-  gallaryVideo.src = article.media_type === "video" ? article.url : ""; // Stops the video from playing when style="display: none"
+  // Check if the media is an image or video
+  if (article.media_type === "image") setGallaryContent(article);
+  else setGallaryVideo(article);
 
   contentTitle.textContent = article.title;
   contentDescription.textContent = article.explanation;
-  contentOwner.textContent = article.copyright ? article.copyright : "NASA"; // Set content owner to NASA because we use their data
-
-  // Check if the media is an image or video
-  if (article.media_type === "image") {
-    gallaryContent.style.display = "block"; // show image
-    gallaryVideo.style.display = "none"; // hide video
-  } else {
-    gallaryContent.style.display = "none"; // hide image
-    gallaryVideo.style.display = "block"; // show video
-  }
+  contentOwner.textContent = article.copyright ?? "NASA"; // Set content owner to NASA because we use their data
 }
 
 function errorCheckedDate(date) {
@@ -112,8 +113,6 @@ function errorCheckedDate(date) {
 async function loadNextOrPrevPicture() {
   const date = errorCheckedDate(new Date(year, month, day));
   const nextDate = errorCheckedDate(new Date(year, month, day - 1));
-
-  // console.log(localStorage.getItem(date.toLocaleDateString()));
 
   // Request next data if the next date is not in the local storage
   // TODO: Make the loading and prevent user from switching image
@@ -148,7 +147,6 @@ nextBtn.addEventListener("click", async () => {
 });
 
 document.addEventListener("keydown", async (event) => {
-  // console.log(event.key);
   if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
     if (event.key === "ArrowRight") day -= 1;
     if (event.key === "ArrowLeft") day += 1;
@@ -156,6 +154,9 @@ document.addEventListener("keydown", async (event) => {
   }
 });
 
-gallaryContent.onload = () => (gallaryLoading.style.visibility = "hidden"); // Checks if the image was loaded
-gallaryVideo.onload = () => (gallaryLoading.style.visibility = "hidden"); // Checks if the image was loaded
+// Removes the loading screen when the image/video was loaded
+gallaryContent.onload = () => (gallaryLoading.style.visibility = "hidden");
+gallaryVideo.onload = () => (gallaryLoading.style.visibility = "hidden");
+
+// Replaces template article with today's when the page is loaded
 window.onload = setInitialPictureOfTheDay();
