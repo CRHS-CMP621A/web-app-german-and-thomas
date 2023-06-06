@@ -157,4 +157,5 @@ document.addEventListener("keydown", async (event) => {
 });
 
 gallaryContent.onload = () => (gallaryLoading.style.visibility = "hidden"); // Checks if the image was loaded
+gallaryVideo.onload = () => (gallaryLoading.style.visibility = "hidden"); // Checks if the image was loaded
 window.onload = setInitialPictureOfTheDay();
