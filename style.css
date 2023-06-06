@@ -22,7 +22,6 @@ body {
   gap: 1rem;
 }
 
-
 .appname::after {
   content: "APOD";
   color: lime;
@@ -34,25 +33,9 @@ body {
 }
 
 .logo {
-  margin-left: 1rem;
-  position: relative;
-  border: white solid 2px;
-  min-width: 30px;
-  min-height: 30px;
-  background-color: white;
-  background-image: url(images/starfield-banner.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
-}
-
-.logo::after {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border: white solid 2px;
-  background-color: transparent;
-  transform: rotate(45deg);
+  user-select: none;
+  max-width: 100%;
+  width: 40px;
 }
 
 .navbar {
