@@ -116,7 +116,6 @@ body {
   width: inherit;
   background-color: rgba(0, 0 ,0, 0.57);
   border-radius: 1rem;
-  z-index: 1;
 }
 
 .gallary-loading::after {
