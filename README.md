@@ -2,7 +2,7 @@
 
 # JS-Web-App
 
-## Project Name:
+## Project Name: SpaceStop
 
 #### Developers: German Ivkovich and Thomas Qi
 
@@ -12,11 +12,13 @@
 
 ### Problem Or Situation to Improve
 
-> Provide some background context / research / description of the problem that exists that you are trying to solve.  
-> Audience: Who would use your product and where?
-> If you are re-building an app that already exists, then explain what the issue is with the current app that you want to improve.
+> Description of the problem that exists in an app that already exists.
 
-> >
+Our app is based on the website called “Astronomy Picture Of the Day,” and we are trying to improve the accessibility.
+
+Accessibility is important and many products take this into consideration when designing a web app. In some cases, the old apps do not receive accessibility updates. Unclear layout can bring confusion and discomfort to the user using your app. Bad text contrast can increase the time for the user to classify information and make navigation difficult. Additionally, a tiny font size can make it difficult for the user to read and perceive information in the app.
+
+The audience for this web app is anyone in the public. It can be someone who wants to admire space, or someone who is collecting astronomical photographs for a research.
 
 #### Short Product Description
 
@@ -33,5 +35,3 @@
 - [URL API](https://developer.mozilla.org/en-US/docs/Web/API/URL_API) (MDN Web Docs)
   - [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) (MDN Web Docs)
 - [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) (MDN Web Docs)
-- [Document Object Model (DOM) API](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) (MDN Web Docs)
-  - [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document) (MDN Web Docs)
