@@ -35,6 +35,7 @@ function addDataToLocalStorage(data) {
   for (let article of data) {
     const date = new Date(article.date + "T00:00:00"); // T00:00:00 avoid issue of no timezone
     const dateString = date.toLocaleDateString();
+
     articles[dateString] = article;
     localStorage.setItem(dateString, JSON.stringify(article)); // Convert data to string and store it in local storage
   }
