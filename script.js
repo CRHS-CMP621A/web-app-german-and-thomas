@@ -1,4 +1,5 @@
 const gallaryContainter = document.querySelector(".gallary-container");
+const gallaryLoading = document.querySelector(".gallary-loading");
 const gallaryVideo = document.querySelector(".gallary-video");
 const gallaryContent = document.querySelector(".gallary-content");
 const contentTitle = document.querySelector(".content-title");
@@ -21,6 +22,8 @@ let year = maxDate.getFullYear(); // Today's year
 let month = maxDate.getMonth(); // Today's month
 let day = maxDate.getDate(); // Today's day
 
+let articles = {};
+
 function formatDateObject(date) {
   dateString = date.toLocaleDateString();
   reversedDateStrArray = dateString.split("/").reverse();
@@ -32,11 +35,8 @@ function addDataToLocalStorage(data) {
   for (let article of data) {
     const date = new Date(article.date + "T00:00:00"); // T00:00:00 avoid issue of no timezone
     const dateString = date.toLocaleDateString();
-
-    // console.log(dateString);
-    // Check if the item doesn't exists
-    if (!localStorage.getItem(dateString))
-      localStorage.setItem(dateString, JSON.stringify(article)); // Convert data to string and store it in local storage
+    articles[dateString] = article;
+    localStorage.setItem(dateString, JSON.stringify(article)); // Convert data to string and store it in local storage
   }
 }
 
@@ -64,12 +64,16 @@ async function getMultiplePicturesOfTheDay(startDate, endDate) {
 }
 
 function setHTMLContentFromLocalStorage(date) {
-  const article = JSON.parse(localStorage.getItem(date.toLocaleDateString()));
+  gallaryLoading.style.visibility = "visible";
+
+  const dateString = date.toLocaleDateString();
+  let article = articles[dateString];
+
+  if (!article && !localStorage.getItem(dateString)) return;
+  article = JSON.parse(localStorage.getItem(dateString));
 
   // console.log(date.toLocaleDateString());
   // console.log(article);
-
-  if (!article) return; // Check if article exists
 
   gallaryContent.src = article.media_type === "image" ? article.url : "";
   gallaryContent.alt = article.media_type === "image" ? article.title : "";
@@ -151,4 +155,5 @@ document.addEventListener("keydown", async (event) => {
   }
 });
 
+gallaryContent.onload = () => (gallaryLoading.style.visibility = "hidden"); // Checks if the image was loaded
 window.onload = setInitialPictureOfTheDay();
