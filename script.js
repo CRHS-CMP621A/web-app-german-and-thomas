@@ -65,6 +65,7 @@ async function getMultiplePicturesOfTheDay(startDate, endDate) {
 }
 
 function setGallaryContent(article) {
+  gallaryVideo.src = ""; // Stops the video from playing when style="display: none";
   gallaryContent.src = article.url ?? "";
   gallaryContent.alt = article.title ?? "";
   gallaryContent.style.display = "block"; // show image
@@ -72,7 +73,7 @@ function setGallaryContent(article) {
 }
 
 function setGallaryVideo(article) {
-  gallaryVideo.src = article.url ?? ""; // Stops the video from playing when style="display: none"
+  gallaryVideo.src = article.url ?? "";
   gallaryContent.style.display = "none"; // hide image
   gallaryVideo.style.display = "block"; // show video
 }
