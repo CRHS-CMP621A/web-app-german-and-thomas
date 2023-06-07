@@ -16,16 +16,15 @@
 
 Our app is based on the website called “Astronomy Picture Of the Day,” and we are trying to improve the accessibility.
 
-Accessibility is important and many products take this into consideration when designing a web app. In some cases, the old apps do not receive accessibility updates. Unclear layout can bring confusion and discomfort to the user using your app. Bad text contrast can increase the time for the user to classify information and make navigation difficult. Additionally, a tiny font size can make it difficult for the user to read and perceive information in the app.
+Accessibility is important and many products take this into consideration when designing a web app. In some cases, the old apps do not receive accessibility updates. Unclear layout can bring confusion and discomfort to the user using your app. Bad text contrast can increase the time for the user to classify information and make navigation difficult. Additionally, a tiny font size can make it difficult for the user to read and perceive information in the app. Accessibility is important.
 
 The audience for this web app is anyone in the public. It can be someone who wants to admire space, or someone who is collecting astronomical photographs for a research.
 
 #### Short Product Description
 
-> Imagine that you met a tech investor at your high school graduation who asked about your project. How would you pitch your product?
-> (You can describe your ‘dream’ solution even if your actual product did not get fully built during the semester)
+> For tech investor at our high school graduation who asked about our project.
 
-> >
+Our app provides the accessible way to browse astronomy related photographs. It’s great for the astronomy enthusiasts interested in astronomy related photographs. Our main concern is to provide accessibility and ease of navigation. We want to create an app that can be used by anyone on any device. Our future plans is to turn it into full application that can be downloaded from App Store and Google Play.
 
 #### Sources
 
