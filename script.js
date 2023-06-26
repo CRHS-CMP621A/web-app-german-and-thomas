@@ -26,7 +26,7 @@ let articles = {};
 
 function formatDateObject(date) {
   dateString = date.toLocaleDateString();
-  reversedDateStrArray = dateString.split("/").reverse();
+  reversedDateStrArray = dateString.split("-").reverse();
   return `${reversedDateStrArray[0]}-${reversedDateStrArray[2]}-${reversedDateStrArray[1]}`;
 }
 
