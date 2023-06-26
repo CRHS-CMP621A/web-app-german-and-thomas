@@ -24,12 +24,6 @@ let day = maxDate.getDate(); // Today's day
 
 let articles = {};
 
-function formatDateObject(date) {
-  dateString = date.toLocaleDateString();
-  reversedDateStrArray = dateString.split("-").reverse();
-  return `${reversedDateStrArray[0]}-${reversedDateStrArray[2]}-${reversedDateStrArray[1]}`;
-}
-
 function addDataToLocalStorage(data) {
   // console.log(data);
   for (let article of data) {
@@ -43,8 +37,8 @@ function addDataToLocalStorage(data) {
 
 async function getMultiplePicturesOfTheDay(startDate, endDate) {
   const params = new URLSearchParams({
-    start_date: formatDateObject(endDate), // start date can't be today
-    end_date: formatDateObject(startDate), // NASA APOD API accepts dates only in YYYY-MM-DD format
+    start_date: endDate.toLocaleDateString(), // start date can't be today
+    end_date: startDate.toLocaleDateString(), // NASA APOD API accepts dates only in YYYY-MM-DD format
     api_key: API_KEY,
   });
   const response = await fetch(`${baseURL}?${params}`);
